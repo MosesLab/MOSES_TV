@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ASCII"?> 
+<stupidity>
+<plugin type="tab-iframe"> 
+   <name>Weather.com Radar Image [DEN]</name> 
+   <description>600 mile Doppler radar image for DEN</description> 
+   <version>1.0</version> 
+   <tab> 
+      <icon>weather.gif</icon> 
+      <tooltip>DEN Doppler radar image</tooltip> 
+   </tab> 
+</plugin> 
+<plugin type="tab-iframe"> 
+   <name>Weather.com Radar Image [DEN]</name> 
+   <description>600 mile Doppler radar image for DEN</description> 
+   <version>1.0</version> 
+   <tab> 
+      <icon>weather.gif</icon> 
+      <tooltip>DEN Doppler radar image</tooltip> 
+   </tab> 
+</plugin> 
+</stupidity>
