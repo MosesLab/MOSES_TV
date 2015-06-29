@@ -31,38 +31,38 @@ moses_read, index.filename[number], minus, zero, plus, noise, $
 gamma=1
 
 ;Make the big window, and put it in a good place.
-window, 13, xpos=10, ypos=30, xsize=1024, ysize=640, $
+window, 13, xpos=10, ypos=30, xsize=2048, ysize=1280, $
    title='<MTV>------- M O S E S -------<MTV>'
 
 if error eq 0 then begin
    if keyword_set(histeq) then begin
       ;Resize and scale images for display
-      zd = rebin(hist_equal(zero), 1024, 512)
-      md = rebin(hist_equal(minus), 256, 128)
-      pd = rebin(hist_equal(plus),  256, 128)
-      nd = rebin(bytscl(noise), 256, 128) ;noise is always bytscl'd.  
+      zd = rebin(hist_equal(zero), 2048, 1024)
+      md = rebin(hist_equal(minus), 512, 256)
+      pd = rebin(hist_equal(plus),  512, 256)
+      nd = rebin(bytscl(noise), 512, 256) ;noise is always bytscl'd.  
    endif else begin
       ;Resize and scale images for display
-      zd = rebin(bytscl(zero^gamma), 1024, 512)
-      md = rebin(bytscl(minus^gamma), 256, 128)
-      pd = rebin(bytscl(plus^gamma),  256, 128)
-      nd = rebin(bytscl(noise^gamma), 256, 128)
+      zd = rebin(bytscl(zero^gamma), 2048, 1024)
+      md = rebin(bytscl(minus^gamma), 512, 256)
+      pd = rebin(bytscl(plus^gamma),  512, 256)
+      nd = rebin(bytscl(noise^gamma), 512, 256)
    endelse
    
    ;Display images
-   tv, zd, 0,128
-   tv, md, 256,0
-   tv, pd, 512,0
-   tv, nd, 768,0
+   tv, zd, 0,256
+   tv, md, 512,0
+   tv, pd, 1024,0
+   tv, nd, 1536,0
 
    ;Create & display histogram
-   hist_z = histogram(zero,  Nbins=256, min=0, max=16383)
-   hist_m = histogram(minus, Nbins=256, min=0, max=16383)
-   hist_p = histogram(plus,  Nbins=256, min=0, max=16383)
-   kcounts = findgen(256) * (16384/256)/1000
+   hist_z = histogram(zero,  Nbins=512, min=0, max=16383)
+   hist_m = histogram(minus, Nbins=512, min=0, max=16383)
+   hist_p = histogram(plus,  Nbins=512, min=0, max=16383)
+   kcounts = findgen(512) * (16384/512)/1000
 
    plot, kcounts, hist_m, /noerase, linestyle=1, /ylog, $
-      /device, position = [20,20, 255,127], charsize=1, $
+      /device, position = [20,20, 511,255], charsize=1, $
       xrange=[0,16384]/1000, yrange=[1,max(hist_m)], /xstyle
    oplot, kcounts, hist_p, linestyle=2
    oplot, kcounts, hist_z
@@ -91,30 +91,33 @@ if error eq 0 then begin
    right = 1.0
    center = 0.5
 
+   ;define text color (to be visible against all grayscale backgrounds)
+   red1=[255,255,255]
+
    ;Saturated pixel count in LL corner of each image
-   xyouts, 2,135, sat_z, align=left, /device
-   xyouts, 257,2, sat_m, align=left, /device
-   xyouts, 514,2, sat_p, align=left, /device
-   xyouts, 770,2, sat_n, align=left, /device
+   xyouts, 2,270, sat_z, align=left, charsize=3.0, charthick=2.0, color=red1, /device
+   xyouts, 514,2, sat_m, align=left, charsize=3.0, charthick=2.0, color=red1, /device
+   xyouts, 1028,2, sat_p, align=left, charsize=3.0, charthick=2.0, color=red1, /device
+   xyouts, 1544,2, sat_n, align=left, charsize=3.0, charthick=2.0, color=red1, /device
 
    ;Channel label, LR corner of each image
-   xyouts, 1021,135, "m = 0",  align=right, /device
-   xyouts, 509,2,    "m = -1", align=right, /device
-   xyouts, 765,2,    "m = +1", align=right, /device
-   xyouts, 1021,2,   "noise",  align=right, /device
+   xyouts, 2042,270, "m = 0",  align=right, charsize=3.0, charthick=2.0, color=red1, /device
+   xyouts, 1018,2,    "m = -1", align=right, charsize=3.0, charthick=2.0, color=red1, /device
+   xyouts, 1530,2,    "m = +1", align=right, charsize=3.0, charthick=2.0, color=red1, /device
+   xyouts, 2042,2,   "noise",  align=right, charsize=3.0, charthick=2.0, color=red1, /device
 
    ;Date, time, filename, exp time at top
-   xyouts, 2,620, index.date[number]+" "+index.time[number], $
-      align=left, /device
-   xyouts, 512,620, index.filename[number], align=center, /device
-   duration_string = strcompress("exp time: "+string(index.exptime[number]))
-   xyouts, 1021,620, duration_string, align=right, /device
+   xyouts, 2,1250, index.date[number]+" "+index.time[number], $
+      align=left, charsize=3.0, charthick=2.0, color=red1, /device
+   xyouts, 1024,1250, index.filename[number], align=center, charsize=3.0, charthick=2.0, color=red1, /device
+   duration_string = strcompress("exp time: "+string(index.exptime[number])+" us")
+   xyouts, 2042,1250, duration_string, align=right, charsize=3.0, charthick=2.0, color=red1, /device
 
 endif else begin
    ;Display file not found error
    mesg = "IMAGE "+string(number)+" NOT FOUND: "+index.filename[number]
    if n_elements(directory) ne 0 then mesg=mesg+" in directory "+directory
-   xyouts,10,10,mesg, /device
+   xyouts,10,10,mesg, charthick=1.5, color='79', /device
 endelse
 
 end

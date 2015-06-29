@@ -29,6 +29,13 @@ N_old = 0L
 if n_elements(directory) eq 0 then directory = '/media/moses/Data/TM_data'
 if n_elements(xfile) eq 0 then xfile="imageindex.xml"
 
+print, ""
+print, "********************************************************"
+print, "*                       MOSES TV                       *"
+print, "********************************************************"
+print, ""
+print, "Searching for new images in " + directory + "/....."
+print, ""
 
 while(1) do begin
    log = mxml(xfile, directory)

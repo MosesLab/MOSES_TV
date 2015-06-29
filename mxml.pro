@@ -67,24 +67,17 @@ if n_elements(directory) ne 0 then $
 
 ;Parse the XML file, recover list of exposures.
 oDocument = obj_new('IDLffXMLDOMDocument')
+
+repeat begin
+
 oDocument->Load, FILENAME=filename, /exclude_ignorable_whitespace
 oLog = oDocument->GetFirstChild() 	;The root element of the XML file
-oExposureList = oLog->GetElementsByTagName('ROEIMAGE')
-
-spawn, "clear"
-print, "*****************************************************"
-print, "*                      MOSES_TV                     *"
-print, "*****************************************************"
-print, ""
-print, "Wating for new images in " + directory + "/....."
-print, ""
-repeat begin				;loop waits until image is detected
+oExposureList = oLog->GetElementsByTagName('ROEIMAGE')				;loop waits until image is detected
 N = oExposureList->GetLength()   	;Number of exposure records
-wait, 1
-;print, string(N)
+wait, 0.5
+;print, "number of exposures found: "+string(N)
+
 endrep until N gt 0
-
-
 
 ;Create the index structure that will be returned.
 index = {filename:replicate('<empty>',N),   $
@@ -93,6 +86,11 @@ index = {filename:replicate('<empty>',N),   $
           seqname:replicate('<empty>',N),   $
           exptime:fltarr(N),   $
          chansize:lonarr(N,4) }
+
+
+;var = oExposureList->Item(0)
+;print, var->tagtext('FILENAME')
+;wait, 10
 
 for i=0, N-1 do begin
    oExp = oExposureList->Item(i) ;Record for the last exposure
@@ -120,6 +118,8 @@ for i=0, N-1 do begin
    endif
    
 endfor
+
+;print, "done displaying images;"
 
 return, index
 
