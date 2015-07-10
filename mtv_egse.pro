@@ -40,6 +40,7 @@ print, ""
 while(1) do begin
    log = mxml(xfile, directory)
    N = n_elements(log.filename)
+   ;print, N
    if N gt N_old then begin
       print, N,' exposures indexed. Displaying latest: ',log.filename[N-1]
       mtv, log, N-1, byteorder=byteorder, directory=directory

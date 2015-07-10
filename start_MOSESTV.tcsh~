@@ -5,7 +5,7 @@
 
 #start idl
 cd /media/moses/Data/MTV_EGSE
-idl "idl_compiler"
+idl "mtv_egse"
 
 #start SSW - (not necessary?)
 #idl -e "sswidl" -args 'idl_script'

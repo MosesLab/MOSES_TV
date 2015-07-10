@@ -66,14 +66,14 @@ buf_size = 2097152
 next_pixel = uint(0)
 virt_buf = uintarr(3* buf_size)
 
-;print, 'channel0:'
-;print, channels[0]
-;print, 'channel1:'
-;print, channels[1]
-;print, 'channel2:'
-;print, channels[2]
-;print, 'channel3: '
-;print, channels[3]
+print, 'channel0:'
+print, channels[0]
+print, 'channel1:'
+print, channels[1]
+print, 'channel2:'
+print, channels[2]
+print, 'channel3: '
+print, channels[3]
 
 ;initialize arrays based on reported channels
 if channels[0] eq 1 then n_read = uintarr(buf_size)
@@ -118,11 +118,11 @@ if error eq 0 then begin
       endelse
 
    endfor
-   ;print, next_pixel
-   ;print, i0
-   ;print, i1
-   ;print, i2
-   ;print, i3
+   print, next_pixel
+   print, i0
+   print, i1
+   print, i2
+   print, i3
 
    n = uintarr(2048,1024) & m=n & z=n & p=n
    if channels[0] eq 1 then n[0:buf_size-1] = n_read

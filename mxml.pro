@@ -75,6 +75,7 @@ oLog = oDocument->GetFirstChild() 	;The root element of the XML file
 oExposureList = oLog->GetElementsByTagName('ROEIMAGE')				;loop waits until image is detected
 N = oExposureList->GetLength()   	;Number of exposure records
 wait, 0.5
+;print, N
 ;print, "number of exposures found: "+string(N)
 
 endrep until N gt 0
@@ -85,12 +86,16 @@ index = {filename:replicate('<empty>',N),   $
              time:replicate('<empty>',N),   $
           seqname:replicate('<empty>',N),   $
           exptime:fltarr(N),   $
+         numpixels:lonarr(N), $
+         channels:uintarr(N,4), $
          chansize:lonarr(N,4) }
 
 
 ;var = oExposureList->Item(0)
 ;print, var->tagtext('FILENAME')
 ;wait, 10
+
+chanstr = replicate('<empty>', N)
 
 for i=0, N-1 do begin
    oExp = oExposureList->Item(i) ;Record for the last exposure
@@ -99,22 +104,36 @@ for i=0, N-1 do begin
    index.time[i] = oExp->tagtext('TIME')                   ;Time
    index.date[i] = oExp->tagtext('DATE')                   ;Date
    index.exptime[i] = float( oExp->tagtext('DURATION') )   ;Exposure Duration
+   index.numpixels[i] = ULONG(oExp->tagtext('PIXELS'))     ;pixels
 
-   ;Channel size is encoded with channel number as an attribute, so...
-   oChanSizeList = oExp->GetElementsByTagName('CHANNEL_SIZE')
-   Nchan = oChanSizeList->GetLength()   ;Number of channels
-   for j=0,Nchan-1 do begin
-      oChanSize = oChanSizeList->Item(j)
-      channel = fix( oChanSize->GetAttribute("ch") )
-      oChanSizeChild = oChanSize->GetFirstChild()
-      index.chansize[i,channel] = long( oChanSizeChild->GetNodeValue() )
-   endfor
+;check which channels are recorded:
+;print, oExp->tagtext('CHANNELS')
+
+chanstr[i] = oExp->tagtext('CHANNELS')
+;print, chanstr[i]
+
+if strmatch(oExp->tagtext('CHANNELS'), '0') eq 1 then index.channels[i,0] = 1
+if strmatch(oExp->tagtext('CHANNELS'), '*1*') eq 1 then index.channels[i,1] = 1
+if strmatch(oExp->tagtext('CHANNELS'), '*2*') eq 1 then index.channels[i,2] = 1
+if strmatch(oExp->tagtext('CHANNELS'), '*3') eq 1 then index.channels[i,3] = 1
+
+;total pixels are encoded as attribute   
+
+;Channel size is encoded with channel number as an attribute, so...
+;   oNumPixels = oExp->GetElementsByTagName('PIXELS')
+;   Npix = oChanSizeList->GetLength()   ;Number of channels
+;   for j=0,Nchan-1 do begin
+;      oChanSize = oChanSizeList->Item(j)
+;      channel = fix( oChanSize->GetAttribute("ch") )
+;      oChanSizeChild = oChanSize->GetFirstChild()
+;      index.chansize[i,channel] = long( oChanSizeChild->GetNodeValue() )
+;   endfor
    
    if keyword_set(verbose) then begin
       print,'---------------------------------------------------------'
       print, index.filename[i],',   ',index.date[i],',   ',index.time[i]
       print, "exposure time:          ",index.exptime[i]
-      print, "channel sizes 0/1/2/3:  ",reform(index.chansize[i,*])
+      print, "full size:  ",reform(index.numpixels[i])
    endif
    
 endfor
