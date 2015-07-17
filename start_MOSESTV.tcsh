@@ -3,6 +3,9 @@
 #initializes and starts SSW (via ~/.cshrc)
 #needed to initalize
 
+#Catch interrupt to exit gracefully
+onintr interrupt
+
 #start idl
 cd /media/moses/Data/MTV_EGSE
 idl "idl_compiler"
@@ -10,4 +13,11 @@ idl "idl_compiler"
 #start SSW - (not necessary?)
 #idl -e "sswidl" -args 'idl_script'
 
+interrupt:
+    #exit procedure
+    'exit'
+    reset
+    echo "Remeber to close the mtv display BEFORE this window!"
+    echo ""
+    
 

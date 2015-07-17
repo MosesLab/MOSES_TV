@@ -22,7 +22,8 @@
 ;  2005-Jul-22 CCK
 ;  2005-Nov-30 CCK fixed bug affecting DIRECTORY input.
 ;-
-pro MTV_EGSE, directory, xfile, byteorder=byteorder
+
+function MTV_EGSE, directory, xfile, byteorder=byteorder
 
 N_old = 0L
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;changed default path to match EGSE laptop
@@ -30,12 +31,17 @@ if n_elements(directory) eq 0 then directory = '/media/moses/Data/TM_data'
 if n_elements(xfile) eq 0 then xfile="imageindex.xml"
 
 print, ""
+spawn, 'clear'
+print, ""
 print, "********************************************************"
 print, "*                       MOSES TV                       *"
 print, "********************************************************"
 print, ""
+print, "DO NOT close terminal window before MTV display window"
+print, ""
 print, "Searching for new images in " + directory + "/....."
 print, ""
+
 
 while(1) do begin
    log = mxml(xfile, directory)
@@ -46,8 +52,19 @@ while(1) do begin
       mtv, log, N-1, byteorder=byteorder, directory=directory
       N_old = N
    endif else begin
-      wait, 1
+      ;check if window has been closed by user:
+      device, window_state=check_open
+      if check_open[13] eq 0 then return, check_open[13]
+      
+      ;check if program interrupted by user:
+      ;killswitch = uint(IDL_bailout(stop))
+      ;if uint(killswitch) eq 1 then wdelete, 13
+
+      ;wait, .5
    endelse
 endwhile
 
 end
+
+
+

@@ -15,8 +15,24 @@ resolve_routine, 'mxml', /IS_FUNCTION
 resolve_routine, 'mtv'
 ;resolve_routine, 'mtv_browse'
 ;resolve_routine, 'mtv_cube'
-resolve_routine, 'mtv_egse'
+resolve_routine, 'mtv_egse', /IS_FUNCTION
 
-;mtv_egse
+result = mtv_egse()
+
+;while(1) do begin
+
+      ;print, result
+      ;bar = idl_bailout(stop)
+
+      ;if (bar eq 1) then begin
+          ;wdelete, 13
+          ;print, 'interrupt detected'
+      ;endif
+
+    if (result eq 0) then print, 'MTV window closed...'
+    
+    ;wait, 0.5
+
+;endwhile
 
 end
