@@ -34,5 +34,5 @@ result = mtv_egse()
     ;wait, 0.5
 
 ;endwhile
-
+exit
 end

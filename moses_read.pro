@@ -119,10 +119,10 @@ if error eq 0 then begin
 
    endfor
    ;print, next_pixel
-   ;print, i0
-   ;print, i1
-   ;print, i2
-   ;print, i3
+   ;print, 'i0' & print, i0
+   ;print, 'i1' & print, i1
+   ;print, 'i2' & print, i2
+   ;print, 'i3' & print, i3
 
    n = uintarr(2048,1024) & m=n & z=n & p=n
    if channels[0] eq 1 then n[0:buf_size-1] = n_read

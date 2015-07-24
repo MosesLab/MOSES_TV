@@ -29,10 +29,10 @@ result = mtv_egse()
           ;print, 'interrupt detected'
       ;endif
 
-    if (result eq 0) then print, 'MTV window closed...'
+    if (result eq 0) then print, '' & print, 'MTV window closed...'
     
     ;wait, 0.5
 
 ;endwhile
-
 exit
+end

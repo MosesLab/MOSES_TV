@@ -33,7 +33,7 @@ gamma = 1 ;initialize contrast
 if not keyword_set(byteorder) then byteorder = 0
 if not keyword_set(histeq) then histeq = 0
 
-if n_elements(directory) eq 0 then directory = curdir()
+if n_elements(directory) eq 0 then directory = '/media/moses/Data/TM_data'
 if n_elements(xfile) eq 0 then xfile="imageindex.xml"
 
 log = mxml(xfile, directory)

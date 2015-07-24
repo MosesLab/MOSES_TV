@@ -15,8 +15,9 @@ idl "idl_compiler"
 
 interrupt:
     #exit procedure
-    'exit'
-    reset
+    #'exit'
+    echo ""
+    #reset
     echo "Remeber to close the mtv display BEFORE this window!"
     echo ""
     
