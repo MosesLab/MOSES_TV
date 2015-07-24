@@ -1,5 +1,5 @@
 ;NAME:
-;  MTV_CUBE
+;  MTV2_CUBE
 ;PURPOSE:
 ;  Load up the entire raw data cubes associated with a particular index file.
 ;CALLING SEQUENCE:
@@ -16,18 +16,20 @@
 ;     optional, but why would you run this code if not to use them??
 ;  log --- index structure
 ;DEPENDENCIES:
-;  MTV --- image display program
-;  MXML --- parses XML log file.
+;  MTV2 --- image display program
+;  MXML2 --- parses XML log file.
 ;MODIFICATION HISTORY:
 ;  2015-Apr-28 CCK based on MTV_BROWSE.
-pro mtv_cube, directory, xfile, minus=minus, plus=plus, zero=zero, noise=noise, $
+;  2015-Jul-24 JRR added GS laptop compatibility
+;-
+pro mtv2_cube, directory, xfile, minus=minus, plus=plus, zero=zero, noise=noise, $
    log=log, byteorder=byteorder
 
 if not keyword_set(byteorder) then byteorder = 0
 if n_elements(directory) eq 0 then directory = curdir()
 if n_elements(xfile) eq 0 then xfile="imageindex.xml"
 
-log = mxml(xfile, directory)
+log = mxml2(xfile, directory)
 N = n_elements(log.filename)
 print, N,' exposures indexed.',log.filename[N-1]
 
@@ -41,7 +43,7 @@ noise = intarr(2048,1024,N)
 !p.charsize=2
 for i=0, N-1 do begin
    sizes = log.chansize[i,*]
-   moses_read, log.filename[i], m, z, p, n, $
+   moses2_read, log.filename[i], m, z, p, n, $
       sizes=sizes, byteorder=byteorder, error=error, directory=directory
    minus[*,*,i] = m
    plus[*,*,i] = p

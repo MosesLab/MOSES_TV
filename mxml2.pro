@@ -29,13 +29,13 @@ end
 
 ;+
 ;NAME:
-;  MXML
+;  MXML2
 ;PURPOSE:
 ;  Parser for the MOSES XML log file. Returns a structure containing
-;  all the parsed log entries.
+;  all the parsed log entries. Customized for working with the GS laptop.
 ;CALLING SEQUENCE:
-;  index = MXML( [, xfile [, directory]] )
-;  index = MXML( xfile, curdir() )
+;  index = MXML2( [, xfile [, directory]] )
+;  index = MXML2( xfile, curdir() )
 ;***WARNING***
 ;  IDL 6.1 bug in Mac OS X:
 ;  IDL's XML parser has problems working with the current working
@@ -50,16 +50,17 @@ end
 ;     index arrays in SolarSoft.
 ;INPUTS:
 ;  directory --- where the XML file lives. If not supplied, then
-;     xfile is assumed to be a fully qualified path. See WARNING above.
+;     default is set to "/media/moses/Data/TM_data/". See WARNING above.
 ;  xfile --- name of XML log file. Default is "imageindex.xml".
 ;KEYWORDS:
 ;  verbose --- if set, MXML prints a table of all parsed elements.
 ;DEPENDENCIES:
-;  MOSES_READ --- reads raw MOSES image data.
+;  MOSES2_READ --- reads raw MOSES image data.
 ;MODIFICATION HISTORY:
 ;  2005-Jul-22 CCK
+;  2015-Jul-24 JRR
 ;-
-function mxml, xfile, directory, verbose=verbose
+function mxml2, xfile, directory, verbose=verbose
 
 filename = xfile
 if n_elements(directory) ne 0 then $
@@ -74,7 +75,7 @@ oDocument->Load, FILENAME=filename, /exclude_ignorable_whitespace
 oLog = oDocument->GetFirstChild() 	;The root element of the XML file
 oExposureList = oLog->GetElementsByTagName('ROEIMAGE')				;loop waits until image is detected
 N = oExposureList->GetLength()   	;Number of exposure records
-wait, 0.5
+;wait, 0.5
 ;print, N
 ;print, "number of exposures found: "+string(N)
 

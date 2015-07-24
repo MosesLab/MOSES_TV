@@ -8,7 +8,7 @@ onintr interrupt
 
 #start idl
 cd /media/moses/Data/MTV_EGSE
-idl "mtv_browse"
+idl "browse_compiler"
 
 #start SSW - (not necessary?)
 #idl -e "sswidl" -args 'idl_script'

@@ -1,5 +1,5 @@
 ;NAME:
-;  MOSES_READ
+;  MOSES2_READ
 ;PURPOSE:
 ;  Read .roe files from MOSES, as written by MSSL's EGSE computer. Orientation
 ;  of image[i,j] is in detector plane, facing detector from secondary mirror 
@@ -10,7 +10,7 @@
 ;  If a dark image file is specified, then dark subtraction is done auto-
 ;  matically.
 ;CALLING SEQUENCE:
-;  moses_read, filename, minus, zero, plus, noise [, dark=dark]
+;  moses2_read, filename, minus, zero, plus, noise [, dark=dark]
 ;     [, /byteorder] [, /auto] [sizes=sizes] [error=error]
 ;INPUTS:
 ;  filename --- name of .roe file, including extension.
@@ -38,8 +38,10 @@
 ;  2005-Nov-30 CCK, trap for missing ('noise') channel 0,
 ;     trap for possible leading '/mdata/' in filename, and added
 ;     optional directory keyword.
+;  2015-Jul-24 JRR added GS laptop compatibility
+;-
 
-pro moses_read,filename,m,z,p,n, dark=dark, byteorder=byteorder, $
+pro moses2_read,filename,m,z,p,n, dark=dark, byteorder=byteorder, $
    auto=auto, size=size, channels, error=error, directory=directory
 
 

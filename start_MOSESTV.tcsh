@@ -7,7 +7,7 @@
 onintr interrupt
 
 #start idl
-cd /media/moses/Data/MTV_EGSE
+cd /media/moses/Data/MTV_EGSE_2
 idl "idl_compiler"
 
 #start SSW - (not necessary?)

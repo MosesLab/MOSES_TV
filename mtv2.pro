@@ -1,11 +1,11 @@
 ;+
 ;NAME:
-;  MTV
+;  MTV2
 ;PURPOSE:
 ;  Display images from a MOSES exposure, with all 3 orders on the same screen, 
 ;  some image statistics, and useful info from the log file.
 ;CALLING SEQUENCE:
-;  mtv, index, number, byteorder=byteorder
+;  mtv2, index, number, byteorder=byteorder
 ;INPUTS:
 ;  index --- exposure index structure from mxml().
 ;  number --- desired image number from the index.
@@ -16,15 +16,16 @@
 ;MODIFICATION HISTORY:
 ;  Written by CCK, Summer 2005
 ;  2005-Nov-30 CCK added directory keyword.
+;  2015-Jul-24 JRR added GS laptop compatibility
 ;-
-pro mtv, index, number, byteorder=byteorder, directory=directory, $
+pro mtv2, index, number, byteorder=byteorder, directory=directory, $
    histeq=histeq, gamma=gamma
 
 !p.charsize=2
 size = index.numpixels[number]
 
 
-moses_read, index.filename[number], minus, zero, plus, noise, $
+moses2_read, index.filename[number], minus, zero, plus, noise, $
    size=size, index.channels[number, *], byteorder=byteorder, error=error, directory=directory
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;added the following for debug:

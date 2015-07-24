@@ -1,6 +1,6 @@
 ;+
 ;NAME:
-;  MTV_BROWSE
+;  MTV2_BROWSE
 ;PURPOSE:
 ;  Science telemetry browser (MTV_browse) Provides the ability to step through 
 ;  image data from the MOSES rocket payload. The image log (XML) format is read,
@@ -10,7 +10,7 @@
 ;     [S]up  [X]down [A]top [Z]bottom [B]byteorder [Q]quit
 ;
 ;CALLING SEQUENCE:
-;  MTV_EGSE [, directory [, xfile]]
+;  MTV2_BROWSE [, directory [, xfile]]
 ;INPUTS:
 ;  directory --- where the images and XML file live. If not
 ;     supplied, the current working directory is used.
@@ -20,13 +20,14 @@
 ;  byteorder --- as conventionally used by IDL. default 0.
 ;  histeq --- hist_equal the display instead of tvscl.
 ;DEPENDENCIES:
-;  MTV --- image display program
-;  MXML --- parses XML log file.
+;  MTV2 --- image display program
+;  MXML2 --- parses XML log file.
 ;MODIFICATION HISTORY:
 ;  2005-Jul-22 CCK
 ;  2005-Nov-30 CCK fixed bug affecting DIRECTORY input.
+;  2015-Jul-24 JRR added GS laptop compatibility
 ;-
-pro MTV_BROWSE, directory, xfile, byteorder=byteorder, histeq=histeq
+pro MTV2_BROWSE, directory, xfile, byteorder=byteorder, histeq=histeq
 
 gamma = 1 ;initialize contrast
 
@@ -36,14 +37,14 @@ if not keyword_set(histeq) then histeq = 0
 if n_elements(directory) eq 0 then directory = '/media/moses/Data/TM_data'
 if n_elements(xfile) eq 0 then xfile="imageindex.xml"
 
-log = mxml(xfile, directory)
+log = mxml2(xfile, directory)
 N = n_elements(log.filename)
 print, N,' exposures indexed.',log.filename[N-1]
 i=N-1
 
 quit=0
 while(not quit) do begin
-   mtv, log, i, byteorder=byteorder, directory=directory, histeq=histeq, $
+   mtv2, log, i, byteorder=byteorder, directory=directory, histeq=histeq, $
       gamma=gamma
    print,'Exposure '+strcompress(string(i))+' '+$
       '[S]up  [X]down [A]top [Z]bottom [B]byteorder [C]color table [<>]gamma [Q]quit'

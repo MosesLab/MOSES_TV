@@ -10,14 +10,14 @@
 ;-
 pro idl_compiler
 
-resolve_routine, 'moses_read'
-resolve_routine, 'mxml', /IS_FUNCTION
-resolve_routine, 'mtv'
-;resolve_routine, 'mtv_browse'
-;resolve_routine, 'mtv_cube'
-resolve_routine, 'mtv_egse', /IS_FUNCTION
+resolve_routine, 'moses2_read'
+resolve_routine, 'mxml2', /IS_FUNCTION
+resolve_routine, 'mtv2'
+;resolve_routine, 'mtv2_browse'
+;resolve_routine, 'mtv2_cube'
+resolve_routine, 'mtv2_egse', /IS_FUNCTION
 
-result = mtv_egse()
+result = mtv2_egse()
 
 ;while(1) do begin
 
