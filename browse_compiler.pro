@@ -8,7 +8,7 @@
 ;MODIFICATION HISTORY:
 ;  2015-July-10
 ;-
-pro idl_compiler
+pro browse_compiler
 
 resolve_routine, 'moses2_read'
 resolve_routine, 'mxml2', /IS_FUNCTION

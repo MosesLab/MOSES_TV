@@ -7,8 +7,8 @@
 onintr interrupt
 
 #start idl
-cd /media/moses/Data/MTV_EGSE
-idl "idl_compiler"
+cd /media/moses/Data/MTV_EGSE_2
+sudo idl "idl_compiler"
 
 #start SSW - (not necessary?)
 #idl -e "sswidl" -args 'idl_script'
