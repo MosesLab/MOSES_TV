@@ -8,7 +8,7 @@
 ;MODIFICATION HISTORY:
 ;  2015-July-10
 ;-
-pro idl_compiler
+pro browse_compiler
 
 resolve_routine, 'moses2_read'
 resolve_routine, 'mxml2', /IS_FUNCTION
@@ -16,8 +16,9 @@ resolve_routine, 'mtv2'
 resolve_routine, 'mtv2_browse'
 ;resolve_routine, 'mtv2_cube'
 ;resolve_routine, 'mtv2_egse', /IS_FUNCTION
+resolve_routine, 'mtv2_egse'
 
-mtv2_browse
+;mtv2_browse
 
 exit
 end

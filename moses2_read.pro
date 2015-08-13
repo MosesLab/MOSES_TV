@@ -66,7 +66,8 @@ i3 = ulong(0)
 frag = 4
 buf_size = 2097152
 next_pixel = uint(0)
-virt_buf = uintarr(3* buf_size)
+;virt_buf = uintarr(3* buf_size)
+virt_buf = uintarr(size)
 
 ;print, 'channel0:'
 ;print, channels[0]
@@ -118,6 +119,8 @@ if error eq 0 then begin
       endif else begin
          if channels[0] eq 1 then n_read[i0] = next_pixel & i0++
       endelse
+
+	
 
    endfor
    ;print, next_pixel

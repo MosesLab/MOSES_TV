@@ -16,6 +16,7 @@ resolve_routine, 'mtv2'
 resolve_routine, 'mtv2_browse'
 ;resolve_routine, 'mtv2_cube'
 ;resolve_routine, 'mtv2_egse', /IS_FUNCTION
+;resolve_routine, 'mtv2_egse'
 
 mtv2_browse
 
