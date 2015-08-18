@@ -44,15 +44,23 @@ print, ""
 print, "Searching for new images in " + directory + "/....."
 print, ""
 
+foo = file_search(directory+'/*.roe',count=total_N_old)
+window, 13, xpos=10, ypos=30, xsize=2048, ysize=1280, $
+   title='<MTV>------- M O S E S -------<MTV>'
 
 while(1) do begin
-   log = mxml2(xfile, directory)
-   N = n_elements(log.filename)
+   ;log = mxml2(xfile, directory)
+   ;N = n_elements(log.filename)
    ;print, N
-   if N gt N_old then begin
+   foo = file_search(directory+'/*.roe',count=total_N)
+   if total_N gt total_N_old then begin
+      wait, 0.1   
+      log = mxml2(xfile, directory)
+      N = n_elements(log.filename)
       print, N,' exposures indexed. Displaying latest: ',log.filename[N-1]
       mtv2, log, N-1, byteorder=byteorder, directory=directory
-      N_old = N
+      total_N_old = total_N
+      wshow, 13
    endif else begin
       ;check if window has been closed by user:
       device, window_state=check_open

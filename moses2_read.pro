@@ -66,8 +66,9 @@ i3 = ulong(0)
 frag = 4
 buf_size = 2097152
 next_pixel = uint(0)
-;virt_buf = uintarr(3* buf_size)
-virt_buf = uintarr(size)
+virt_buf = uintarr(3* buf_size)
+print, size
+;virt_buf = uintarr(2*size)
 
 ;print, 'channel0:'
 ;print, channels[0]
