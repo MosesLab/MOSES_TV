@@ -54,7 +54,7 @@ while(1) do begin
    ;print, N
    foo = file_search(directory+'/*.roe',count=total_N)
    if total_N gt total_N_old then begin
-      wait, 0.1   
+      wait, 0.5
       log = mxml2(xfile, directory)
       N = n_elements(log.filename)
       print, N,' exposures indexed. Displaying latest: ',log.filename[N-1]

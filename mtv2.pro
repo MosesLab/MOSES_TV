@@ -26,7 +26,7 @@ size = index.numpixels[number]
 
 
 moses2_read, index.filename[number], minus, zero, plus, noise, $
-   size=size, index.channels[number, *], byteorder=byteorder, error=error, directory=directory
+   size=size, byteorder=byteorder, error=error, directory=directory
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;added the following for debug:
 gamma=1
@@ -49,7 +49,24 @@ if error eq 0 then begin
       pd = rebin(bytscl(plus^gamma),  512, 256)
       nd = rebin(bytscl(noise^gamma), 512, 256)
    endelse
-   
+
+;construct grid on zero order image
+grid_angular_res = 120	;angular resolution in arcsec
+arcsec_per_pixel= 0.6
+
+grid_width = grid_angular_res/arcsec_per_pixel ;1 arcmin per grid cell
+
+ngridx = 2048/round(grid_width) + 1
+ngridy = 1024/round(grid_width) + 1
+
+gridx = indgen(ngridx)*grid_width
+gridy = indgen(ngridy)*grid_width
+
+for grid_ind = 1, ngridx-1 do $	
+	zd(gridx(grid_ind),*) = 255
+for grid_ind = 1, ngridy-1 do $
+	zd(*, 1023 - (gridy(grid_ind))) = 255
+
    ;Display images
    tv, zd, 0,256
    tv, md, 512,0
